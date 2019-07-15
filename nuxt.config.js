@@ -54,7 +54,12 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
   },
-
+  /*
+  ** router middleware
+  */
+  router: {
+    middleware: ['auth', 'initStore']
+  },
   /*
   ** Build configuration
   */
