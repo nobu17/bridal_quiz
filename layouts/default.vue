@@ -3,7 +3,10 @@
     <v-toolbar :clipped-left="clipped" fixed app>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-toolbar-title v-if="user" v-text="user.name" />
+      <div v-if="user && user.name" >
+        <v-toolbar-title v-text="user.name" />
+        <v-btn color="primary" type="button" @click="deleteUser">削除</v-btn>
+      </div>
     </v-toolbar>
     <v-content>
       <v-container>
@@ -22,6 +25,13 @@ export default {
   computed: {
     user() {
       return this.$store.getters['auth/user']
+    }
+  },
+  methods: {
+    async deleteUser() {
+      await this.$store.dispatch('auth/deleteUser', {
+        user: this.user
+      })
     }
   },
   data() {

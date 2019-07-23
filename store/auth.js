@@ -1,7 +1,7 @@
 import UserClient from '../lib/UserClient'
 
 export const state = () => ({
-  user: { name: '' }
+  user: { id: '', name: '' }
 })
 
 export const getters = {
@@ -22,5 +22,13 @@ export const actions = {
     console.log('user', user)
     const added = await userClient.addUser(user)
     console.log('added', added)
+  },
+  async deleteUser({ commit }, { user }) {
+    console.log('user', user)
+    await userClient.deleteUser(user)
+    console.log('delend')
+  },
+  async countUpUserScore({ state }) {
+    await userClient.countUpUserScore(state.user)
   }
 }
