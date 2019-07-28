@@ -13,6 +13,9 @@ export const getters = {
 export const mutations = {
   setUser(state, user) {
     state.user = user
+  },
+  initUser(state) {
+    state.user = { id: '', name: '' }
   }
 }
 
@@ -21,11 +24,13 @@ export const actions = {
   async addUser({ commit }, { user }) {
     console.log('user', user)
     const added = await userClient.addUser(user)
+    commit('setUser', added)
     console.log('added', added)
   },
   async deleteUser({ commit }, { user }) {
     console.log('user', user)
     await userClient.deleteUser(user)
+    commit('initUser')
     console.log('delend')
   },
   async countUpUserScore({ state }) {

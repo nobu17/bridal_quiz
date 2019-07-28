@@ -26,6 +26,16 @@ export default {
   components: {
     LoaingScreen
   },
+  computed: {
+    suser() {
+      return this.$store.getters['auth/user']
+    }
+  },
+  mounted() {
+    if (this.suser && this.suser.id !== '') {
+      this.$router.push('/quiz/1')
+    }
+  },
   data() {
     return {
       user: { name: '' },
@@ -47,23 +57,33 @@ export default {
     }
   },
   methods: {
-    commitName() {
+    async commitName() {
       if (this.$refs.form.validate()) {
         const res = confirm(this.user.name + 'でよろしいですか？')
         if (res) {
           try {
             this.isLoading = true
-            this.$store.dispatch('auth/addUser', {
+            await this.$store.dispatch('auth/addUser', {
               user: this.user
             })
+            this.goNextPage()
           } catch (err) {
             console.error(err)
             this.errorMessage =
               'エラーが発生しました。再度実行を行ってください。'
-          } finally {
             this.isLoading = false
           }
         }
+      }
+    },
+    goNextPage() {
+      const url = this.$route.query.redirect
+      console.log('url', url)
+      if (url) {
+        this.$router.push(url)
+        console.log('pushed', url)
+      } else {
+        this.$router.push('/quiz/1')
       }
     }
   }

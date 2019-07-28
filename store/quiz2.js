@@ -4,7 +4,7 @@ export const state = () => ({
   questions: [],
   currentQuestionIndex: 0,
   userAnswers: [],
-  allUserAnswers: {}
+  allUserAnswers: [] // index:quizindex selectionCount [[0,0,0,0],[0,1,0,1]]
 })
 
 export const getters = {
@@ -33,19 +33,28 @@ export const mutations = {
     console.log('incrementQuestion')
     state.currentQuestionIndex++
   },
-  addAllUserAnswers(state, oneUserAnswer) {
-    state.allUserAnswers[oneUserAnswer.userId] = oneUserAnswer.answers
+  initAllUserAnswer(state, questions) {
+    state.allUserAnswers = questions.map(q => q.selections.map(s => 0))
+    console.log('state.allUserAnswers', state.allUserAnswers)
+  },
+  calcUpUserAnswer(state, answer) {
+    console.log('calcUpUserAnswer', answer)
+    if (state.allUserAnswers[answer.questionIndex]) {
+      state.allUserAnswers[answer.questionIndex][answer.answerIndex] =
+        state.allUserAnswers[answer.questionIndex][answer.answerIndex] + 1
+      // state.allUserAnswers = JSON.parse(JSON.stringify(state.allUserAnswers))
+    }
+    console.log('after calcUpUserAnswer', state.allUserAnswers)
   }
 }
 
 const quizClient = new FirebaseQuizClient()
+
 export const actions = {
   async readQuestions({ commit }, { groupId, user }) {
     // 問題読み込み
     const questions = await quizClient.readQuestion(groupId)
     console.log('questions', questions)
-    // 回答初期化
-    // const answers = questions.map(x => ({ answerNo: 0, memo: '' }))
     // 回答状況読み込み
     const uAnswers = await quizClient.readUserAnswers(user.id, groupId)
     // 未回答部分を初期化
@@ -53,6 +62,11 @@ export const actions = {
       if (!uAnswers.answers[index]) {
         uAnswers.answers.push({ answerIndex: -1, memo: '' })
       }
+    })
+    // 回答状況の初期化と監視
+    commit('initAllUserAnswer', questions)
+    quizClient.listenUserAnswers(groupId, answer => {
+      commit('calcUpUserAnswer', answer)
     })
     console.log('initedAnswer', uAnswers)
     commit('setUserAnswers', uAnswers.answers)

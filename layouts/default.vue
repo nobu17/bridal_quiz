@@ -3,7 +3,7 @@
     <v-toolbar :clipped-left="clipped" fixed app>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <div v-if="user && user.name" >
+      <div v-if="user && user.name">
         <v-toolbar-title v-text="user.name" />
         <v-btn color="primary" type="button" @click="deleteUser">削除</v-btn>
       </div>
@@ -32,6 +32,7 @@ export default {
       await this.$store.dispatch('auth/deleteUser', {
         user: this.user
       })
+      this.$router.push('/entry')
     }
   },
   data() {

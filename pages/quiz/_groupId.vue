@@ -16,12 +16,7 @@
         <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
       </v-flex>
       <v-flex xs12>
-        <QuizSummary
-          v-if="allUserAnswers && questions[currentQuestionIndex]"
-          :question="questions[currentQuestionIndex]"
-          :allUserAnswers="allUserAnswers"
-          :quizIndex="currentQuestionIndex"
-        />
+        <SelfChart :height="250" />
       </v-flex>
     </v-container>
     <LoaingScreen :isLoading="isLoading" />
@@ -30,14 +25,15 @@
 
 <script>
 import LoaingScreen from '../..//components/common/loadingScreen'
+import SelfChart from '../../components/selfChart'
 import Quiz from '../../components/quiz'
-import QuizSummary from '../../components/quizSummary'
 export default {
   components: {
     Quiz,
-    QuizSummary,
-    LoaingScreen
+    LoaingScreen,
+    SelfChart
   },
+  middleware: 'auth',
   computed: {
     questions() {
       return this.$store.getters['quiz2/questions']
