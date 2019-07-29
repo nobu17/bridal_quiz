@@ -79,6 +79,8 @@ export default {
         user: this.user
       })
       this.isLoading = false
+    } else {
+      console.log('no user')
     }
   },
   data() {

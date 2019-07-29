@@ -32,8 +32,5 @@ export const actions = {
     await userClient.deleteUser(user)
     commit('initUser')
     console.log('delend')
-  },
-  async countUpUserScore({ state }) {
-    await userClient.countUpUserScore(state.user)
   }
 }

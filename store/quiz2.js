@@ -83,7 +83,7 @@ export const actions = {
       answer.answerIndex
     ) {
       console.log('count up st')
-      await quizClient.countUpUserScore(user.id, groupId)
+      await quizClient.countUpUserScore(user.id, user.name, groupId)
       console.log('count up end')
     }
     // 更新
