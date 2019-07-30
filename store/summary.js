@@ -1,44 +1,28 @@
 import SummaryClient from '../lib/summaryClient'
-import FirebaseQuizClient from '../lib/FirebaseQuizClient'
 
 export const state = () => ({
-  questions: [],
-  answerSummaries: [],
-  userAnswers: []
+  userScores: []
 })
 
 export const getters = {
-  questions(state) {
-    return state.questions
-  },
-  answerSummaries(state) {
-    return state.answerSummaries
-  },
-  userAnswers(state) {
-    return state.userAnswers
+  userScores(state) {
+    return state.userScores
   }
 }
 
 export const mutations = {
-  setQuestions(state, questions) {
-    state.questions = questions
-  },
-  setAnswerSummaries(state, answerSummaries) {
-    state.answerSummaries = answerSummaries
+  setUserScores(state, userScores) {
+    state.userScores = userScores
   }
 }
 
-const quizClient = new FirebaseQuizClient()
 const summaryClinet = new SummaryClient()
 
 export const actions = {
-  async readSummary({ commit }, { groupId }) {
-    console.log('readSummary')
-    const summary = await summaryClinet.getAnswersSummary(groupId)
-    console.log('summary', summary)
-    // 問題読み込み
-    const questions = await quizClient.readQuestion(groupId)
-    commit('setQuestions', questions)
-    commit('setAnswerSummaries', summary)
+  async readScores({ commit }, { groupId }) {
+    console.log('readScore')
+    const scores = await summaryClinet.readUserScores(groupId)
+    console.log('readScore end', scores)
+    commit('setUserScores', scores)
   }
 }

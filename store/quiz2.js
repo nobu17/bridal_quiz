@@ -1,4 +1,5 @@
 import FirebaseQuizClient from '../lib/FirebaseQuizClient'
+import FirebaseScoreClient from '../lib/firebaseScoreClient'
 
 export const state = () => ({
   questions: [],
@@ -49,6 +50,7 @@ export const mutations = {
 }
 
 const quizClient = new FirebaseQuizClient()
+const scoreClient = new FirebaseScoreClient()
 
 export const actions = {
   async readQuestions({ commit }, { groupId, user }) {
@@ -63,6 +65,8 @@ export const actions = {
         uAnswers.answers.push({ answerIndex: -1, memo: '' })
       }
     })
+    // ユーザスコアが無ければ作成
+    await scoreClient.initUserScore(user.id, user.name, groupId, false)
     // 回答状況の初期化と監視
     commit('initAllUserAnswer', questions)
     quizClient.listenUserAnswers(groupId, answer => {
@@ -83,7 +87,7 @@ export const actions = {
       answer.answerIndex
     ) {
       console.log('count up st')
-      await quizClient.countUpUserScore(user.id, user.name, groupId)
+      await scoreClient.countUpUserScore(user.id, user.name, groupId)
       console.log('count up end')
     }
     // 更新

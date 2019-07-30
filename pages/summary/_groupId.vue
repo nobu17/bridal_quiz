@@ -7,51 +7,44 @@
       <v-flex xs12>
         <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
       </v-flex>
-      <div v-if="answerSummaries">
-        <v-flex xs12 v-for="(anssum, index) in answerSummaries" :key="index">
-          <OneSummary
-            :question="questions[index]"
-            :summary="anssum.summary"
-          />
-        </v-flex>
+      <div v-if="userScores">
+        <ScoreSummary :scores="userScores" />
       </div>
+      <v-flex xs12>
+        <v-btn block color="secondary" @click="loadScores">更新</v-btn>
+      </v-flex>
     </v-container>
-    <LoaingScreen :isLoading="isLoading" />
+    <LoadingScreen :isLoading="isLoading" />
   </v-layout>
 </template>
 
 <script>
-import OneSummary from '../..//components/oneSummary'
-import LoaingScreen from '../..//components/common/loadingScreen'
+import ScoreSummary from '../..//components/scoreSummary'
+import LoadingScreen from '../..//components/common/loadingScreen'
 export default {
   components: {
-    LoaingScreen,
-    OneSummary
+    ScoreSummary,
+    LoadingScreen
   },
   computed: {
-    user() {
-      return this.$store.getters['auth/user']
-    },
-    questions() {
-      return this.$store.getters['summary/questions']
-    },
-    answerSummaries() {
-      return this.$store.getters['summary/answerSummaries']
+    userScores() {
+      return this.$store.getters['summary/userScores']
     }
   },
   async mounted() {
-    if (this.user.id !== '') {
-      this.groupId = parseInt(this.$nuxt.$route.params.groupId)
-      console.log('groupID', this.groupId)
+    this.groupId = parseInt(this.$nuxt.$route.params.groupId)
+    console.log('groupId', this.groupId)
+    await this.loadScores()
+  },
+  methods: {
+    async loadScores() {
       this.isLoading = true
-      await this.$store.dispatch('summary/readSummary', {
-        groupId: this.groupId,
-        user: this.user
+      await this.$store.dispatch('summary/readScores', {
+        groupId: this.groupId
       })
       this.isLoading = false
     }
   },
-  methods: {},
   data() {
     return {
       errorMessage: '',
