@@ -15,7 +15,7 @@
       <v-flex xs12>
         <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
       </v-flex>
-      <v-flex xs12>
+      <v-flex xs12 v-show="isAlreadyAnswered">
         <SelfChart :height="250" />
       </v-flex>
     </v-container>
@@ -35,6 +35,15 @@ export default {
   },
   middleware: 'auth',
   computed: {
+    isAlreadyAnswered() {
+      if (
+        this.userAnswers[this.currentQuestionIndex] &&
+        this.userAnswers[this.currentQuestionIndex].answerIndex !== -1
+      ) {
+        return true
+      }
+      return false
+    },
     questions() {
       return this.$store.getters['quiz2/questions']
     },

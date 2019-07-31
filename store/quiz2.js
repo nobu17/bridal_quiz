@@ -31,6 +31,12 @@ export const getters = {
 }
 
 export const mutations = {
+  initAllData(state) {
+    state.questions = []
+    state.currentQuestionIndex = 0
+    state.userAnswers = []
+    state.allUserAnswers = []
+  },
   setQuestions(state, questions) {
     state.questions = questions
   },
@@ -50,6 +56,7 @@ const scoreClient = new FirebaseScoreClient()
 
 export const actions = {
   async readQuestions({ commit }, { groupId, user }) {
+    commit('initAllData')
     // 問題読み込み
     const questions = await quizClient.readQuestion(groupId)
     console.log('questions', questions)

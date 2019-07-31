@@ -1,12 +1,12 @@
 <script>
 // import VueCharts from 'vue-chartjs'
-import { Bar, mixins } from 'vue-chartjs'
+import { HorizontalBar, mixins } from 'vue-chartjs'
 import FirebaseQuizClient from '../lib/firebaseQuizClient'
 
 const quizClient = new FirebaseQuizClient()
 
 export default {
-  mixins: [Bar, mixins.reactiveData],
+  mixins: [HorizontalBar, mixins.reactiveData],
   data: function() {
     return {
       allQuestionAnswers: [], // [[0,1,3], [1,2,4], [4,6,7]]
@@ -26,7 +26,7 @@ export default {
         },
         scales: {
           // 軸設定
-          yAxes: [
+          xAxes: [
             {
               // y軸設定
               display: true, // 表示設定
@@ -39,18 +39,18 @@ export default {
               ticks: {
                 // 最大値最小値設定
                 min: 0, // 最小値
-                max: 40, // 最大値
+                max: 35, // 最大値
                 fontSize: 18, // フォントサイズ
                 stepSize: 5 // 軸間隔
               }
             }
           ],
-          xAxes: [
+          yAxes: [
             {
               // x軸設定
               display: true, // 表示設定
-              barPercentage: 0.4, // 棒グラフ幅
-              categoryPercentage: 0.4, // 棒グラフ幅
+              barPercentage: 0.6, // 棒グラフ幅
+              categoryPercentage: 0.6, // 棒グラフ幅
               scaleLabel: {
                 // 軸ラベル設定
                 display: false, // 表示設定
@@ -87,17 +87,18 @@ export default {
   watch: {
     questions(val) {
       console.log('questions is changed', val)
-      // init data by questions
-      this.initAnswerByQueston()
+      if (val && val.length > 0) {
+        // init data by questions
+        this.initAnswerByQueston()
 
-      quizClient.listenUserAnswers(1, answer => {
-        // console.log('listen!!!!', answer)
-        this.countUpAnswer(answer)
-        // this.countUpChartData(answer)
-      })
+        quizClient.listenUserAnswers(1, answer => {
+          // console.log('listen!!!!', answer)
+          this.countUpAnswer(answer)
+          // this.countUpChartData(answer)
+        })
+      }
     },
     currentQuestionIndex(val) {
-      console.log('&&&&&&&&&&&&&&&&&&&&&currentQuestionIndex is changed', val)
       this.changeCurrentQuestion(val)
     }
   },
