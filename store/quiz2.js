@@ -42,16 +42,6 @@ export const mutations = {
   },
   initAllUserAnswer(state, questions) {
     state.allUserAnswers = questions.map(q => q.selections.map(s => 0))
-    console.log('state.allUserAnswers', state.allUserAnswers)
-  },
-  calcUpUserAnswer(state, answer) {
-    console.log('calcUpUserAnswer', answer)
-    if (state.allUserAnswers[answer.questionIndex]) {
-      state.allUserAnswers[answer.questionIndex][answer.answerIndex] =
-        state.allUserAnswers[answer.questionIndex][answer.answerIndex] + 1
-      // state.allUserAnswers = JSON.parse(JSON.stringify(state.allUserAnswers))
-    }
-    console.log('after calcUpUserAnswer', state.allUserAnswers)
   }
 }
 
@@ -73,12 +63,6 @@ export const actions = {
     })
     // ユーザスコアが無ければ作成
     await scoreClient.initUserScore(user.id, user.name, groupId, false)
-    // 回答状況の初期化と監視
-    commit('initAllUserAnswer', questions)
-    quizClient.listenUserAnswers(groupId, answer => {
-      commit('calcUpUserAnswer', answer)
-    })
-    console.log('initedAnswer', uAnswers)
     commit('setUserAnswers', uAnswers.answers)
     commit('setQuestions', questions)
   },
