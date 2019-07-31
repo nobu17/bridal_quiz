@@ -5,14 +5,14 @@
         <h2>回答結果集計</h2>
       </v-flex>
       <v-flex xs12>
+        <v-btn block color="primary" @click="loadScores">更新</v-btn>
+      </v-flex>
+      <v-flex xs12>
         <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
       </v-flex>
       <div v-if="userScores">
         <ScoreSummary :scores="userScores" />
       </div>
-      <v-flex xs12>
-        <v-btn block color="secondary" @click="loadScores">更新</v-btn>
-      </v-flex>
     </v-container>
     <LoadingScreen :isLoading="isLoading" />
   </v-layout>

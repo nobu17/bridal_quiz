@@ -47,6 +47,9 @@ export default {
     currentQuestionIndex() {
       return this.$store.getters['quiz2/currentQuestionIndex']
     },
+    isLastQuestion() {
+      return this.$store.getters['quiz2/isLastQuestion']
+    },
     user() {
       return this.$store.getters['auth/user']
     }
@@ -65,7 +68,11 @@ export default {
       // 回答をロード
     },
     goNext() {
-      this.$store.commit('quiz2/incrementQuestion')
+      if (!this.isLastQuestion) {
+        this.$store.commit('quiz2/incrementQuestion')
+      } else {
+        this.$router.push('/summary/' + this.groupId)
+      }
     }
   },
   async mounted() {

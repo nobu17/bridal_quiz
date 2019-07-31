@@ -20,6 +20,13 @@ export const getters = {
   },
   allUserAnswers(state) {
     return state.allUserAnswers
+  },
+  isLastQuestion(state) {
+    const next = state.currentQuestionIndex + 1
+    if (!state.questions[next]) {
+      return true
+    }
+    return false
   }
 }
 
@@ -31,7 +38,6 @@ export const mutations = {
     state.userAnswers = userAnswers
   },
   incrementQuestion(state) {
-    console.log('incrementQuestion')
     state.currentQuestionIndex++
   },
   initAllUserAnswer(state, questions) {
