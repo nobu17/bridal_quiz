@@ -5,7 +5,7 @@
     </div>
     <div v-if="settings.isStart">
       <v-flex xs12>
-        <h3>氏名を入力して開始ボタンを押してください。</h3>
+        <h3>ニックネームを入力して開始ボタンを押してください。</h3>
       </v-flex>
       <v-flex xs12>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="commitName">
