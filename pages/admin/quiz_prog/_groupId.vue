@@ -11,6 +11,9 @@
         <QuestionProg :question="question" @checkedChanged="checkedChanged" />
       </v-flex>
     </div>
+    <v-flex xs12>
+      <v-btn block color="primary" @click="deleteAll">全データ削除</v-btn>
+    </v-flex>
     <LoadingScreen :isLoading="isLoading" />
   </v-layout>
 </template>
@@ -19,7 +22,9 @@
 import LoadingScreen from '../../../components/common/loadingScreen'
 import QuestionProg from '../../../components/questionProg'
 import FirebaseQuizClient from '../../../lib/firebaseQuizClient'
+import FirebaseAdminClinet from '../../../lib/firebaseAdminClinet'
 const quizClient = new FirebaseQuizClient()
+const adminClient = new FirebaseAdminClinet()
 export default {
   components: {
     LoadingScreen,
@@ -59,6 +64,19 @@ export default {
       }
       console.log('changed', val)
       await this.updateQuestionCondition(val)
+    },
+    async deleteAll() {
+      if (confirm('削除してよろしいですか？')) {
+        try {
+          this.errorMessage = ''
+          this.isLoading = true
+          await adminClient.clearAllData()
+        } catch (err) {
+          this.errorMessage = '更新に失敗しました。' + err
+        } finally {
+          this.isLoading = false
+        }
+      }
     }
   },
   data() {
