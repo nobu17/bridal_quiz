@@ -10,6 +10,9 @@
       <v-flex xs12>
         <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
       </v-flex>
+      <v-flex xs12 v-if="yourScore" class="ma-2">
+        <h2 class="red--text ma-3">あなたのスコアは {{ yourScore.score }} 点です。</h2>
+      </v-flex>
       <div v-if="userScores">
         <ScoreSummary :scores="userScores" />
       </div>
@@ -29,6 +32,15 @@ export default {
   computed: {
     userScores() {
       return this.$store.getters['summary/userScores']
+    },
+    user() {
+      return this.$store.getters['auth/user']
+    },
+    yourScore() {
+      if (this.user && this.user.id !== '') {
+        return this.userScores.find(x => x.userId === this.user.id)
+      }
+      return null
     }
   },
   async mounted() {
