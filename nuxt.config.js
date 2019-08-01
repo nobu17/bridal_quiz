@@ -58,7 +58,7 @@ module.exports = {
   ** router middleware
   */
   router: {
-    middleware: ['initStore']
+    middleware: ['initStore', 'initSettings']
     // middleware: ['auth', 'initStore']
   },
   /*

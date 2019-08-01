@@ -1,7 +1,7 @@
 <template>
   <v-layout justify-center align-center wrap>
     <v-flex xs12 v-if="question">
-      <v-switch :label="question.question_no" v-model="question.is_ended"></v-switch>
+      <v-switch :label="dispLabel" v-model="question.is_ended"></v-switch>
     </v-flex>
   </v-layout>
 </template>
@@ -12,6 +12,15 @@ export default {
     question: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    dispLabel() {
+      if (this.question) {
+        return String(this.question.question_no)
+      } else {
+        return ''
+      }
     }
   },
   watch: {

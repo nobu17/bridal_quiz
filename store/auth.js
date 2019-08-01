@@ -1,18 +1,25 @@
 import UserClient from '../lib/UserClient'
 
 export const state = () => ({
-  user: { id: '', name: '' }
+  user: { id: '', name: '' },
+  settings: null
 })
 
 export const getters = {
   user(state) {
     return state.user
+  },
+  settings(state) {
+    return state.settings
   }
 }
 
 export const mutations = {
   setUser(state, user) {
     state.user = user
+  },
+  setSettings(state, settings) {
+    state.settings = settings
   },
   initUser(state) {
     state.user = { id: '', name: '' }
