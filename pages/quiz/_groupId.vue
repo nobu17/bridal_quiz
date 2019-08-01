@@ -16,6 +16,7 @@
         <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
       </v-flex>
       <v-flex xs12 v-show="isAlreadyAnswered">
+        <h3>回答集計</h3>
         <SelfChart :height="250" />
       </v-flex>
     </v-container>
