@@ -5,7 +5,7 @@
         <h2>回答結果集計</h2>
       </v-flex>
       <v-flex xs12>
-        <v-btn block color="primary" @click="loadScores">更新</v-btn>
+        <v-btn block color="primary" v-show="canShowSummary" @click="loadScores">更新</v-btn>
       </v-flex>
       <v-flex xs12>
         <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
@@ -13,7 +13,10 @@
       <v-flex xs12 v-if="yourScore" class="ma-2">
         <h2 class="red--text ma-3">あなたのスコアは {{ yourScore.score }} 点です。</h2>
       </v-flex>
-      <div v-if="userScores">
+      <v-flex xs12 v-if="!canShowSummary" class="ma-2">
+        <h2 class="orange--text ma-3">皆さんの回答が終わるまでお待ちください。</h2>
+      </v-flex>
+      <div v-if="canShowSummary && userScores">
         <ScoreSummary :scores="userScores" />
       </div>
     </v-container>
@@ -41,6 +44,15 @@ export default {
         return this.userScores.find(x => x.userId === this.user.id)
       }
       return null
+    },
+    settings() {
+      return this.$store.getters['auth/settings']
+    },
+    canShowSummary() {
+      if (this.settings && this.settings.isAllQuestionEnd) {
+        return true
+      }
+      return false
     }
   },
   async mounted() {

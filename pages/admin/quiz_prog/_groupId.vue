@@ -12,6 +12,7 @@
       </v-flex>
       <div v-if="settings">
         <v-switch label="開始フラグ" v-model="settings.isStart" xs6></v-switch>
+        <v-switch label="全スコア表示フラグ" v-model="settings.isAllQuestionEnd" xs6></v-switch>
         <v-btn block color="primary" @click="applyIsStart" xs6>反映</v-btn>
       </div>
       <v-flex xs12 v-if="questions && questions.length > 0">
@@ -78,7 +79,10 @@ export default {
       try {
         this.errorMessage = ''
         this.isLoading = true
-        await settingClient.updateStartSetting(this.settings.isStart)
+        await settingClient.updateStartSetting(
+          this.settings.isStart,
+          this.settings.isAllQuestionEnd
+        )
         await this.readSettings()
       } catch (err) {
         this.errorMessage = '更新に失敗しました。' + err
