@@ -17,7 +17,7 @@
     </v-content>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed></v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+      <span>&copy; 2019 made by inagawa</span>
     </v-footer>
   </v-app>
 </template>
@@ -57,7 +57,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: '2019/08/11'
+      title: '2019/08'
     }
   }
 }
