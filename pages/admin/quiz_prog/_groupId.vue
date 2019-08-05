@@ -31,10 +31,10 @@
 <script>
 import LoadingScreen from '../../../components/common/loadingScreen'
 import QuestionProg from '../../../components/questionProg'
-import FirebaseQuizClient from '../../../lib/firebaseQuizClient'
+import FirebaseQuestionClient from '../../../lib/firebaseQuestionClient'
 import FirebaseAdminClinet from '../../../lib/firebaseAdminClinet'
 import FirebaseSettingClient from '../../../lib/firebaseSettingClient'
-const quizClient = new FirebaseQuizClient()
+const quizClient = new FirebaseQuestionClient()
 const adminClient = new FirebaseAdminClinet()
 const settingClient = new FirebaseSettingClient()
 export default {
@@ -56,7 +56,7 @@ export default {
       try {
         this.errorMessage = ''
         this.isLoading = true
-        this.questions = await quizClient.readQuestion(this.groupId)
+        this.questions = await quizClient.readAllQuestion(this.groupId)
       } catch (err) {
         this.errorMessage = 'ロードに失敗しました。' + err
       } finally {

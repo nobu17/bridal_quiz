@@ -1,4 +1,4 @@
-import UserClient from '../lib/UserClient'
+import UserClient from '../lib/userClient'
 
 export const state = () => ({
   user: { id: '', name: '' },

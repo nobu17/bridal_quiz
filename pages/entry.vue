@@ -4,18 +4,24 @@
       <h2 class="red--text ma-3">現在はアクセスできません。アナウンスがあるまでお待ちください。</h2>
     </div>
     <div v-if="settings.isStart">
-      <v-flex xs12>
-        <h3>ニックネームを入力して開始ボタンを押してください。</h3>
+      <v-flex xs12 v-show="!isUserSetted">
+        <h3>ニックネームを入力して設定ボタンを押してください。</h3>
       </v-flex>
-      <v-flex xs12>
+      <v-flex xs12 v-show="!isUserSetted">
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="commitName">
           <v-flex xs12>
             <v-text-field v-model="user.name" :rules="nameRules" :counter="10" label="氏名" required></v-text-field>
           </v-flex>
           <v-flex xs12 class="mb-4">
-            <v-btn block color="primary" type="button" @click="commitName">確定</v-btn>
+            <v-btn block color="primary" type="button" @click="commitName">設定</v-btn>
           </v-flex>
         </v-form>
+      </v-flex>
+      <v-flex xs12 v-if="isUserSetted">
+        <h3>司会者からの案内がありましたら開始ボタンを押下してください。</h3>
+      </v-flex>
+      <v-flex xs12 class="mb-4" v-if="isUserSetted">
+        <v-btn block color="info" type="button" @click="goNextPage">開始</v-btn>
       </v-flex>
       <v-flex xs12>
         <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
@@ -37,11 +43,18 @@ export default {
     },
     settings() {
       return this.$store.getters['auth/settings']
+    },
+    isUserSetted() {
+      console.log('isUserSett', this.suser)
+      if (this.suser && this.suser.id !== '') {
+        return true
+      }
+      return false
     }
   },
   mounted() {
     if (this.suser && this.suser.id !== '') {
-      this.$router.push('/quiz/1')
+      // this.$router.push('/1/1')
     }
   },
   data() {
@@ -74,7 +87,7 @@ export default {
             await this.$store.dispatch('auth/addUser', {
               user: this.user
             })
-            this.goNextPage()
+            this.isLoading = false
           } catch (err) {
             console.error(err)
             this.errorMessage =
@@ -91,7 +104,7 @@ export default {
         this.$router.push(url)
         console.log('pushed', url)
       } else {
-        this.$router.push('/quiz/1')
+        this.$router.push('/1/1')
       }
     }
   }

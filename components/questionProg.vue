@@ -17,7 +17,7 @@ export default {
   computed: {
     dispLabel() {
       if (this.question) {
-        return String(this.question.question_no)
+        return '問' + String(this.question.question_no)
       } else {
         return ''
       }

@@ -6,6 +6,9 @@
 
 <script>
 export default {
-  components: {}
+  components: {},
+  mounted() {
+    this.$router.push('/1/1')
+  }
 }
 </script>

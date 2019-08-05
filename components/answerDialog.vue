@@ -4,6 +4,12 @@
       <v-card v-if="answerExplanation">
         <v-card-title>{{ answerExplanation.title }}</v-card-title>
         <v-card-text>{{ answerExplanation.detail }}</v-card-text>
+        <v-img
+          v-if="answerExplanation.img !== ''"
+          :src="answerExplanation.img"
+          aspect-ratio="1.7"
+          contain
+        ></v-img>
         <v-card-actions>
           <v-btn @click="close">閉じる</v-btn>
         </v-card-actions>
