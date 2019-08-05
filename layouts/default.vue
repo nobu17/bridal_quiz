@@ -5,6 +5,8 @@
       <v-spacer />
       <div v-if="user && user.name">
         <v-toolbar-title v-text="user.name" />
+      </div>
+      <div v-if="user && user.name">
         <v-btn color="primary" type="button" @click="deleteUser">削除</v-btn>
       </div>
     </v-toolbar>
@@ -55,7 +57,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'クイズ'
+      title: '2019/08/11 プラザホテル'
     }
   }
 }

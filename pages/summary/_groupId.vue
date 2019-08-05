@@ -2,7 +2,7 @@
   <v-layout justify-center align-center wrap>
     <v-container>
       <v-flex xs12>
-        <h2>回答結果集計</h2>
+        <h2>回答結果</h2>
       </v-flex>
       <v-flex xs12>
         <v-btn block color="primary" v-show="canShowSummary" @click="loadScores">更新</v-btn>
