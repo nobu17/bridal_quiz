@@ -27,6 +27,9 @@
 <script>
 import ScoreSummary from '../..//components/scoreSummary'
 import LoadingScreen from '../..//components/common/loadingScreen'
+import FirebaseSettingClient from '../../lib/firebaseSettingClient'
+
+const clinet = new FirebaseSettingClient()
 export default {
   components: {
     ScoreSummary,
@@ -59,6 +62,8 @@ export default {
     this.groupId = parseInt(this.$nuxt.$route.params.groupId)
     console.log('groupId', this.groupId)
     await this.loadScores()
+    // 変更監視
+    await clinet.listenGlobalSettingChange(this.changeGlobalSetting)
   },
   methods: {
     async loadScores() {
@@ -67,6 +72,9 @@ export default {
         groupId: this.groupId
       })
       this.isLoading = false
+    },
+    changeGlobalSetting(setting) {
+      return this.$store.commit('auth/setSettings', setting)
     }
   },
   data() {
