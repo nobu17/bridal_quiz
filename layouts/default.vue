@@ -57,7 +57,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: '2019/08/11 プラザホテル'
+      title: '2019/08/11'
     }
   }
 }
