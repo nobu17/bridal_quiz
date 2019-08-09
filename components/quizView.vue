@@ -25,6 +25,9 @@
       </v-radio-group>
     </v-flex>
     <v-flex xs12>
+      <h3 class="text-md-center ans_count">{{ answerCounts }} 人回答済み</h3>
+    </v-flex>
+    <v-flex xs12>
       <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
     </v-flex>
     <v-flex xs4>
@@ -95,6 +98,12 @@ export default {
         return true
       }
       return false
+    },
+    answerCounts() {
+      if (this.answerCountList) {
+        return this.answerCountList.reduce((sum, current) => sum + current, 0)
+      }
+      return 0
     }
   },
   data() {
@@ -130,4 +139,7 @@ export default {
 </script>
 
 <style scoped>
+.ans_count {
+  color: red;
+}
 </style>
