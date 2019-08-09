@@ -9,6 +9,7 @@
       <div v-if="user && user.name">
         <v-btn color="primary" type="button" @click="deleteUser">削除</v-btn>
       </div>
+      <v-btn color="primary" type="button" @click="reload">更新</v-btn>
     </v-toolbar>
     <v-content>
       <v-container>
@@ -35,6 +36,9 @@ export default {
         user: this.user
       })
       this.$router.push('/entry')
+    },
+    reload() {
+      location.reload()
     }
   },
   data() {
