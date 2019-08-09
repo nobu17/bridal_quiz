@@ -9,7 +9,13 @@
           :src="answerExplanation.img"
           aspect-ratio="1.7"
           contain
-        ></v-img>
+        >
+          <template v-slot:placeholder>
+            <v-layout fill-height align-center justify-center ma-0>
+              <v-progress-circular indeterminate color="red lighten-5"></v-progress-circular>
+            </v-layout>
+          </template>
+        </v-img>
         <v-card-actions>
           <v-btn @click="close">閉じる</v-btn>
         </v-card-actions>
