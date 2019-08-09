@@ -25,7 +25,7 @@
       </v-radio-group>
     </v-flex>
     <v-flex xs12>
-      <h3 class="text-md-center ans_count">{{ answerCounts }} 人回答済み</h3>
+      <h3 class="text-xs-center ans_count">{{ answerCounts }} 人回答済み</h3>
     </v-flex>
     <v-flex xs12>
       <v-alert v-if="errorMessage != ''" :value="true" type="error">{{ errorMessage }}</v-alert>
