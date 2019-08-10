@@ -49,7 +49,7 @@ export default {
         'dummy_' + this.getRandomStr(),
         this.groupId,
         this.questionNo,
-        1
+        this.getRandomIndex()
       )
     },
     getRandomStr() {
@@ -64,6 +64,12 @@ export default {
         r += c[Math.floor(Math.random() * cl)]
       }
       return r
+    },
+    getRandomIndex() {
+      const min = 0
+      const max = 3
+
+      return Math.floor(Math.random() * (max + 1 - min)) + min
     }
   },
   data() {
