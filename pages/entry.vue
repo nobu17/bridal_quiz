@@ -28,14 +28,17 @@
       </v-flex>
     </div>
     <LoaingScreen :isLoading="isLoading" />
+    <ConfitmDialog ref="confitmDialog" />
   </v-layout>
 </template>
 
 <script>
+import ConfitmDialog from '../components/common/confitmDialog'
 import LoaingScreen from '../components/common/loadingScreen'
 export default {
   components: {
-    LoaingScreen
+    LoaingScreen,
+    ConfitmDialog
   },
   computed: {
     suser() {
@@ -80,7 +83,11 @@ export default {
   methods: {
     async commitName() {
       if (this.$refs.form.validate()) {
-        const res = confirm(this.user.name + 'でよろしいですか？')
+        const res = await this.$refs.confitmDialog.open(
+          '確認',
+          this.user.name + 'でよろしいですか？',
+          null
+        )
         if (res) {
           try {
             this.isLoading = true

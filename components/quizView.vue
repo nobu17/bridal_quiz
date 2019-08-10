@@ -46,14 +46,17 @@
       <v-alert :value="isAvailableNext" type="error">司会者からの案内があるまで [次へ] は押さないでください。</v-alert>
     </v-flex>
     <AnswerDialog ref="dialog" />
+    <ConfitmDialog ref="confitmDialog" />
   </v-layout>
 </template>
 
 <script>
+import ConfitmDialog from './common/confitmDialog'
 import AnswerDialog from './answerDialog'
 export default {
   components: {
-    AnswerDialog
+    AnswerDialog,
+    ConfitmDialog
   },
   props: {
     question: {
@@ -128,9 +131,13 @@ export default {
         await this.$refs.dialog.open(this.question.answer_explanation)
       }
     },
-    goNext() {
-      if (confirm('次の問題へ行きます。')) {
-        // this.cAnswerIndex = -1
+    async goNext() {
+      const res = await this.$refs.confitmDialog.open(
+        '確認',
+        '次へすすみます。。',
+        null
+      )
+      if (res) {
         this.$emit('goNext')
       }
     }
