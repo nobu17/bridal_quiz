@@ -134,7 +134,7 @@ export default {
     async goNext() {
       const res = await this.$refs.confitmDialog.open(
         '確認',
-        '次へすすみます。。',
+        '次へ進みます。',
         null
       )
       if (res) {
