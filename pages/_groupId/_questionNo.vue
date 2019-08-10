@@ -102,7 +102,7 @@ export default {
           temp[key] += scoreSum[key]
         }
       }
-      console.log('count up result', temp)
+      // console.log('count up result', temp)
       this.answerCountList = temp
     },
     async readQuestion() {

@@ -6,7 +6,7 @@
       <div v-if="user && user.name">
         <v-toolbar-title v-text="user.name" />
       </div>
-      <div v-if="user && user.name">
+      <div v-if="user && user.name && isAllowDelete">
         <v-btn color="primary" type="button" @click="deleteUser">削除</v-btn>
       </div>
       <v-btn color="primary" type="button" @click="reload">更新</v-btn>
@@ -28,6 +28,15 @@ export default {
   computed: {
     user() {
       return this.$store.getters['auth/user']
+    },
+    settings() {
+      return this.$store.getters['auth/settings']
+    },
+    isAllowDelete() {
+      if (this.settings && this.settings.isAllowDelete) {
+        return true
+      }
+      return false
     }
   },
   methods: {

@@ -7,8 +7,8 @@
       <v-card-text v-show="!!message">{{ message }}</v-card-text>
       <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click.native="agree">はい</v-btn>
-        <v-btn color="primary" @click.native="cancel">いいえ</v-btn>
+        <v-btn color="primary" @click.native="cancel">キャンセル</v-btn>
+        <v-btn color="primary" @click.native="agree">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
