@@ -19,6 +19,11 @@
       </v-flex>
       <v-flex xs12 v-if="isUserSetted">
         <h3>司会者からの案内がありましたら開始ボタンを押下してください。</h3>
+        <h3 class="ma-2 wanr_title">お願い</h3>
+        <p class="ma-3">1.うまく動かない等ありましたら、手を挙げてください。新郎が駆け付けます。</p>
+        <p class="ma-3">2.余興中はスマホをスリープにせず、他の画面に行ったりせずにこの余興ページの開いたままにしてください。</p>
+        <p class="ma-3">3.リアルタイムで回答集計や画面切り替えをしますが、画面が更新されない場合には右上の更新ボタンを押してみてください。</p>
+        <p class="ma-3">4.更新、リロードの連打はご遠慮ください。新郎の来月のクレジットカードに重課金される恐れがあります。</p>
       </v-flex>
       <v-flex xs12 class="mb-4" v-if="isUserSetted">
         <v-btn block color="info" type="button" @click="goNextPage">開始</v-btn>
@@ -108,7 +113,9 @@ export default {
       const url = this.$route.query.redirect
       console.log('url', url)
       if (url) {
-        this.$router.push(url)
+        // 無条件で問１へ
+        this.$router.push('/1/1')
+        // this.$router.push(url)
         console.log('pushed', url)
       } else {
         this.$router.push('/1/1')
@@ -118,5 +125,8 @@ export default {
 }
 </script>
 
-<style>
+<style socped>
+.wanr_title {
+  color: red;
+}
 </style>

@@ -61,13 +61,11 @@ export default {
         this.initAnswerList()
         await this.readUserAnswer()
         await this.initScore()
-        // 現在の回答読み込み
-        // await this.readUserCountList()
         // 回答リッスン
-        await questionClient.listenAddedUserAnswer(
+        await questionClient.listenUserAnswerChanged(
           this.groupId,
           this.questionNo,
-          this.addSummary
+          this.calcSummary
         )
       } catch (err) {
         console.error(err)
@@ -106,24 +104,6 @@ export default {
       }
       // console.log('count up result', temp)
       this.answerCountList = temp
-    },
-    // 加算
-    addSummary(scoreSum) {
-      try {
-        const temp = Object.assign([], this.answerCountList)
-        for (const key in scoreSum) {
-          if (temp.length > key) {
-            // 合算
-            temp[key] += scoreSum[key]
-          }
-        }
-        // console.log('count up result', temp)
-        this.answerCountList = temp
-      } catch (err) {
-        console.error(err)
-        this.errorMessage =
-          '集計中にエラーが発生しました。更新ボタンを押して更新してください。'
-      }
     },
     async readQuestion() {
       this.question = await questionClient.readQuestion(

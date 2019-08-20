@@ -40,7 +40,7 @@
       <v-btn block color="warning" @click="goNext" :disabled="!isAvailableNext">次へ</v-btn>
     </v-flex>
     <v-flex xs12>
-      <v-alert :value="!isAnswerable && !isAvailableNext" type="warning">回答解説までお待ちください。</v-alert>
+      <v-alert :value="!isAnswerable && !isAvailableNext" type="warning">回答解説までお待ちください。解説が始まっても画面が変わらない場合、更新ボタンを押下してください。</v-alert>
     </v-flex>
     <v-flex xs12>
       <v-alert :value="isAvailableNext" type="error">司会者からの案内があるまで [次へ] は押さないでください。</v-alert>
